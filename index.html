@@ -3,264 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="99% accurate AI text detection with advanced machine learning">
-    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="Advanced AI text detection with detailed analysis">
     <title>AI Text Detector</title>
-    
-    <!-- Preconnect for performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    
-    <!-- Styles -->
     <link href="static/style.css" rel="stylesheet">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <div class="logo">
-                <div class="logo-icon">
-                    <img src="assets/icons/main_logo.jpg" alt="AI Detector Logo">
-                </div>
-                <div class="logo-text">
-                    <h1>AI Text Detector</h1>
-                </div>
-            </div>
-            <div class="header-stats">
-                <div class="stat-item">
-                    <div class="stat-value">99.2%</div>
-                    <div class="stat-label">Accuracy</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="totalDetections">0</div>
-                    <div class="stat-label">Detections</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">9+</div>
-                    <div class="stat-label">AI Models</div>
-                </div>
-            </div>
-        </div>
-    </header>
-
     <!-- Main Container -->
-    <div class="container">
-        <div class="main-grid">
-            <!-- Main Content -->
-            <div>
-                <!-- Input Card -->
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">
-                            <span>📝</span>
-                            Analyze Text
-                        </h2>
-                    </div>
+    <div class="app-container">
+        <!-- Header Section -->
+        <div class="app-header">
+            <h1 class="app-title">AI Text Detector</h1>
+        </div>
 
-                    <!-- Tabs -->
-                    <div class="tabs">
-                        <button class="tab-button active" data-tab="text" aria-label="Text input tab">
-                            <span>📄</span> Paste Text
-                        </button>
-                        <button class="tab-button" data-tab="file" aria-label="File upload tab">
-                            <span>📎</span> Upload File
-                        </button>
-                    </div>
+        <!-- Tabs -->
+        <div class="tabs-container">
+            <button class="tab-btn active" data-tab="text" id="textTab">
+                Text Input
+            </button>
+            <button class="tab-btn" data-tab="file" id="fileTab">
+                File Upload
+            </button>
+        </div>
 
-                    <!-- Alert -->
-                    <div class="alert alert-error" id="alertBox" role="alert">
-                        <span>⚠️</span>
-                        <span id="alertMessage"></span>
-                    </div>
+        <!-- Text Input Section -->
+        <div class="input-section" id="textInputSection">
+            <label class="input-label">Enter text to analyze:</label>
+            <textarea 
+                id="textInput" 
+                class="text-area"
+                placeholder="Paste your text here for AI detection analysis..."
+                rows="8"
+            ></textarea>
 
-                    <!-- Text Tab -->
-                    <div class="tab-content active" data-content="text">
-                        <div class="text-input-container">
-                            <textarea 
-                                id="textInput" 
-                                placeholder="Paste your text here (minimum 50 characters)..."
-                                aria-label="Text input for analysis"
-                            ></textarea>
-                            <div class="input-info">
-                                <span id="charCount">0 characters • 0 words</span>
-                                <span style="color: var(--gray);">Min: 50 chars</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary btn-block" id="analyzeTextBtn" disabled aria-label="Analyze text">
-                            <span id="analyzeTextBtnText">Analyze Text</span>
-                            <span id="analyzeTextBtnSpinner" class="spinner" style="display: none;" aria-hidden="true"></span>
-                        </button>
-                    </div>
+            <!-- Options -->
+            <div class="options-group">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="detailedAnalysis">
+                    <span class="checkbox-label">Detailed Analysis</span>
+                </label>
+                
+                <label class="checkbox-container">
+                    <input type="checkbox" id="showExplanation">
+                    <span class="checkbox-label">Show Explanation</span>
+                </label>
+            </div>
 
-                    <!-- File Tab -->
-                    <div class="tab-content" data-content="file">
-                        <div class="file-upload-area" id="fileUploadArea" role="button" tabindex="0" aria-label="Upload file area">
-                            <div class="upload-icon">
-                                <img src="assets/icons/upload_icon.png" alt="Upload icon">
-                            </div>
-                            <div class="upload-text">Click to upload or drag and drop</div>
-                            <div class="upload-subtext">Supports: TXT, PDF, DOC, DOCX (Max 10MB)</div>
-                            <input type="file" class="file-input" id="fileInput" accept=".txt,.pdf,.doc,.docx" aria-label="File input">
-                        </div>
-                        <div class="selected-file" id="selectedFile">
-                            <div class="file-icon">📄</div>
-                            <div class="file-info">
-                                <div class="file-name" id="fileName"></div>
-                                <div class="file-size" id="fileSize"></div>
-                            </div>
-                            <button class="remove-file" id="removeFile" aria-label="Remove file">✕</button>
-                        </div>
-                        <button class="btn btn-primary btn-block" id="analyzeFileBtn" style="margin-top: 1rem;" disabled aria-label="Analyze file">
-                            <span id="analyzeFileBtnText">Analyze File</span>
-                            <span id="analyzeFileBtnSpinner" class="spinner" style="display: none;" aria-hidden="true"></span>
-                        </button>
+            <!-- Analyze Button -->
+            <button class="analyze-btn" id="analyzeBtn" disabled>
+                <span id="analyzeBtnText">Analyze Text</span>
+                <span id="analyzeBtnSpinner" class="btn-spinner" style="display: none;"></span>
+            </button>
+        </div>
+
+        <!-- File Upload Section -->
+        <div class="input-section" id="fileInputSection" style="display: none;">
+            <label class="input-label">Upload a file to analyze:</label>
+            
+            <!-- File Upload Area -->
+            <div class="file-upload-area" id="fileUploadArea">
+                <div class="upload-icon">📄</div>
+                <div class="upload-text">Click to upload or drag and drop</div>
+                <div class="upload-subtext">Supports: TXT, PDF, DOC, DOCX (Max 10MB)</div>
+                <input type="file" id="fileInput" class="file-input" accept=".txt,.pdf,.doc,.docx">
+            </div>
+
+            <!-- Selected File Display -->
+            <div class="selected-file" id="selectedFile" style="display: none;">
+                <div class="file-info-container">
+                    <div class="file-icon">📄</div>
+                    <div class="file-details">
+                        <div class="file-name" id="fileName"></div>
+                        <div class="file-size" id="fileSize"></div>
                     </div>
                 </div>
+                <button class="remove-file-btn" id="removeFileBtn">✕</button>
+            </div>
 
-                <!-- Results Card -->
-                <div class="card results" id="resultsCard">
-                    <div class="card-header">
-                        <h2 class="card-title">
-                            <span>📊</span>
-                            Detection Results
-                        </h2>
-                    </div>
+            <!-- Options -->
+            <div class="options-group">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="detailedAnalysisFile">
+                    <span class="checkbox-label">Detailed Analysis</span>
+                </label>
+                
+                <label class="checkbox-container">
+                    <input type="checkbox" id="showExplanationFile">
+                    <span class="checkbox-label">Show Explanation</span>
+                </label>
+            </div>
 
-                    <!-- Verdict -->
-                    <div class="verdict-card" id="verdictCard">
-                        <div class="verdict-icon" id="verdictIcon" aria-hidden="true"></div>
-                        <div class="verdict-title" id="verdictTitle"></div>
-                        <div class="verdict-confidence" id="verdictConfidence"></div>
-                    </div>
+            <!-- Analyze Button -->
+            <button class="analyze-btn" id="analyzeFileBtn" disabled>
+                <span id="analyzeFileBtnText">Analyze File</span>
+                <span id="analyzeFileBtnSpinner" class="btn-spinner" style="display: none;"></span>
+            </button>
+        </div>
 
-                    <!-- Probabilities -->
-                    <div class="probability-section">
-                        <h3 style="margin-bottom: 1rem; font-size: 1.15rem;">Probability Analysis</h3>
-                        <div class="probability-item">
-                            <div class="probability-header">
-                                <span class="probability-label">AI-Generated</span>
-                                <span class="probability-value" id="aiProbValue">0%</span>
-                            </div>
-                            <div class="probability-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                <div class="probability-fill ai" id="aiProbBar" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="probability-item">
-                            <div class="probability-header">
-                                <span class="probability-label">Human-Written</span>
-                                <span class="probability-value" id="humanProbValue">0%</span>
-                            </div>
-                            <div class="probability-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                <div class="probability-fill human" id="humanProbBar" style="width: 0%"></div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage" style="display: none;">
+            Analysis completed successfully!
+        </div>
 
-                    <!-- Detection Methods -->
-                    <div>
-                        <h3 style="margin-bottom: 1rem; font-size: 1.15rem;">Detection Methods Used</h3>
-                        <div class="detection-methods" id="detectionMethods"></div>
-                    </div>
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <!-- Verdict Badge -->
+            <div class="verdict-badge" id="verdictBadge">
+                <div class="verdict-icon" id="verdictIcon">AI</div>
+                <div class="verdict-text" id="verdictText">AI Generated</div>
+            </div>
 
-                    <!-- Traits Detected -->
-                    <div id="traitsSection" style="margin-top: 1.5rem;">
-                        <h3 style="margin-bottom: 1rem; font-size: 1.15rem;">Micro-Level Traits Detected</h3>
-                        <ul class="traits-list" id="traitsList"></ul>
-                    </div>
+            <!-- Probability Bar -->
+            <div class="probability-bar-container">
+                <div class="probability-bar" id="probabilityBar">
+                    <div class="bar-fill" id="barFill"></div>
                 </div>
             </div>
 
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <!-- Features Card -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title" style="font-size: 1.15rem;">
-                            <span>✨</span>
-                            Key Features
-                        </h3>
-                    </div>
-                    <ul class="features-list">
-                        <li class="feature-item">
-                            <div class="feature-icon">✓</div>
-                            <div class="feature-content">
-                                <div class="feature-title">Ensemble Detection</div>
-                                <div class="feature-description">Multi-model AI identification</div>
-                            </div>
-                        </li>
-                        <li class="feature-item">
-                            <div class="feature-icon">✓</div>
-                            <div class="feature-content">
-                                <div class="feature-title">Real-Time Analysis</div>
-                                <div class="feature-description">Instant results in seconds</div>
-                            </div>
-                        </li>
-                        <li class="feature-item">
-                            <div class="feature-icon">✓</div>
-                            <div class="feature-content">
-                                <div class="feature-title">Multiple Formats</div>
-                                <div class="feature-description">TXT, PDF, DOC, DOCX support</div>
-                            </div>
-                        </li>
-                        <li class="feature-item">
-                            <div class="feature-icon">✓</div>
-                            <div class="feature-content">
-                                <div class="feature-title">Privacy First</div>
-                                <div class="feature-description">Your data stays secure</div>
-                            </div>
-                        </li>
-                    </ul>
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="humanProb">33.6%</div>
+                    <div class="stat-label">Human Probability</div>
                 </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="aiProb">66.4%</div>
+                    <div class="stat-label">AI Probability</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="confidence">32.8%</div>
+                    <div class="stat-label">Confidence</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="wordCount">133</div>
+                    <div class="stat-label">Word Count</div>
+                </div>
+            </div>
 
-                <!-- History Card -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title" style="font-size: 1.15rem;">
-                            <span>📜</span>
-                            Recent Analyses
-                        </h3>
-                    </div>
-                    <ul class="history-list" id="historyList">
-                        <li style="text-align: center; color: var(--gray); padding: 2rem;">
-                            No analyses yet
-                        </li>
-                    </ul>
-                </div>
+            <!-- Detailed Analysis Section -->
+            <div class="detailed-section" id="detailedSection" style="display: none;">
+                <h3 class="section-title">Detailed Analysis</h3>
+                <div class="analysis-details" id="analysisDetails"></div>
+            </div>
 
-                <!-- Stats Card -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title" style="font-size: 1.15rem;">
-                            <span>📈</span>
-                            Session Stats
-                        </h3>
-                    </div>
-                    <div class="stats-grid">
-                        <div class="stat-box">
-                            <div class="stat-box-value" id="sessionDetections">0</div>
-                            <div class="stat-box-label">This Session</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-box-value">99.2%</div>
-                            <div class="stat-box-label">Accuracy</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-box-value">9+</div>
-                            <div class="stat-box-label">Models</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-box-value" id="avgConfidence">--</div>
-                            <div class="stat-box-label">Avg Confidence</div>
-                        </div>
-                    </div>
-                </div>
+            <!-- Explanation Section -->
+            <div class="explanation-section" id="explanationSection" style="display: none;">
+                <h3 class="section-title">Explanation</h3>
+                <div class="explanation-content" id="explanationContent"></div>
             </div>
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="scripts/main.js"></script>
 </body>
 </html>
