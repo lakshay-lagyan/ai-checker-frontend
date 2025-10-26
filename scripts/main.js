@@ -1,7 +1,7 @@
 // Configuration 
 const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:8000'
-    : 'https://ai-text-detector-xris.onrender.com';  
+    : 'https://ai-text-detector-ls22.onrender.com';  
 
 console.log('API URL:', API_URL);
 
