@@ -13,6 +13,8 @@
     <div class="app-container">
         <!-- Header Section -->
         <div class="app-header">
+            
+            <img class="app-logo" src="assets/icons/main_logo.jpg" alt="logo" height="60px" width="50px">
             <h1 class="app-title">AI Text Detector</h1>
         </div>
 
@@ -62,7 +64,9 @@
             
             <!-- File Upload Area -->
             <div class="file-upload-area" id="fileUploadArea">
-                <div class="upload-icon">📄</div>
+                <div class="upload-icon">
+                    <img src="assets/icons/upload_icon.png" alt="upload-file" height="100px" width="130px">
+                </div>
                 <div class="upload-text">Click to upload or drag and drop</div>
                 <div class="upload-subtext">Supports: TXT, PDF, DOC, DOCX (Max 10MB)</div>
                 <input type="file" id="fileInput" class="file-input" accept=".txt,.pdf,.doc,.docx">
@@ -71,7 +75,9 @@
             <!-- Selected File Display -->
             <div class="selected-file" id="selectedFile" style="display: none;">
                 <div class="file-info-container">
-                    <div class="file-icon">📄</div>
+                    <div class="file-icon">
+                        <img src="assets/icons/file-icon.png" alt="files" height="50px" width="60px" >
+                    </div>
                     <div class="file-details">
                         <div class="file-name" id="fileName"></div>
                         <div class="file-size" id="fileSize"></div>

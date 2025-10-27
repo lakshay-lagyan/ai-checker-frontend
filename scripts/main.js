@@ -3,7 +3,7 @@ const API_URL = window.location.hostname === 'localhost' || window.location.host
     ? 'http://localhost:8000'
     : 'https://ai-text-detector-api-e0yl.onrender.com';
 
-console.log('🌐 API URL:', API_URL);
+console.log('API URL:', API_URL);
 
 // DOM Elements
 const textInput = document.getElementById('textInput');
@@ -368,10 +368,10 @@ function setLoading(isLoading, source) {
 fetch(`${API_URL}/health`)
     .then(response => response.json())
     .then(data => {
-        console.log('✅ API connection successful:', data);
+        console.log('API connection successful:', data);
     })
     .catch(error => {
-        console.warn('⚠️ API not reachable:', error);
+        console.warn('API not reachable:', error);
         alert('Backend API not reachable. Please ensure the server is running.');
     });
 
@@ -391,5 +391,5 @@ window.loadSampleHuman = () => {
     textInput.dispatchEvent(new Event('input'));
 };
 
-console.log('🚀 AI Text Detector initialized');
-console.log('💡 Try: loadSampleAI() or loadSampleHuman()');
+console.log('AI Text Detector initialized');
+console.log('Try: loadSampleAI() or loadSampleHuman()');

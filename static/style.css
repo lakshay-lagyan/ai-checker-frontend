@@ -56,6 +56,7 @@ body {
 .app-header {
     background: var(--dark-bg);
     padding: 2rem;
+    display: flex;
     text-align: center;
 }
 
