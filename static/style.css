@@ -197,7 +197,7 @@ body {
 .upload-icon::before{
   content: "";
   position: absolute;
-  inset: -12px;              /* expands outside the image */
+  inset: -12px;             
   border-radius: 16px;
   background:
     radial-gradient(40% 40% at 20% 20%, rgba(99,102,241,0.30), transparent 18%),
@@ -229,8 +229,8 @@ body {
 
 /* Hover state: lift, stronger glow and animate sparkle */
 .upload-icon:hover img{
-  transform: translateY(-6px) scale(2.06);
-  filter: drop-shadow(0 10px 26px rgba(1, 13, 32, 0.753)) saturate(1.05);
+  transform: translateY(-6px) scale(2.02);
+  filter: drop-shadow(0 10px 26px rgba(1, 25, 63, 0.32)) saturate(1.05);
 }
 
 /* make halo visible and pulse a little */
