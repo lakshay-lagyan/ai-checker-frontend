@@ -170,10 +170,137 @@ body {
 }
 
 .upload-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    opacity: 0.5;
+  position: relative;
+  display: inline-block;
+  border-radius: 12px;   
+  padding: 6px;          
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* the image itself */
+.upload-icon img {
+  display: block;
+  width: auto;            
+  height: 100px;          
+  border-radius: 8px;
+  transition: transform 300ms cubic-bezier(.2,.9,.2,1),
+              filter 300ms cubic-bezier(.2,.9,.2,1),
+              box-shadow 300ms cubic-bezier(.2,.9,.2,1);
+  position: relative;
+  z-index: 2;
+  will-change: transform, filter;
+}
+
+/* soft glowing halo (behind the image) */
+.upload-icon::before{
+  content: "";
+  position: absolute;
+  inset: -12px;              /* expands outside the image */
+  border-radius: 16px;
+  background:
+    radial-gradient(40% 40% at 20% 20%, rgba(99,102,241,0.30), transparent 18%),
+    radial-gradient(30% 30% at 80% 80%, rgba(59,130,246,0.18), transparent 28%);
+  filter: blur(10px);
+  opacity: 0;
+  transition: opacity 220ms ease, transform 420ms ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* moving sparkle (foreground) — small bright dot that travels */
+.upload-icon::after{
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0.85) 30%, rgba(255,255,255,0.15) 55%, transparent 70%);
+  box-shadow: 0 0 10px rgba(255,255,255,0.9);
+  z-index: 3;
+  top: 50%;
+  left: -10%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+/* Hover state: lift, stronger glow and animate sparkle */
+.upload-icon:hover img{
+  transform: translateY(-6px) scale(2.06);
+  filter: drop-shadow(0 10px 26px rgba(1, 13, 32, 0.753)) saturate(1.05);
+}
+
+/* make halo visible and pulse a little */
+.upload-icon:hover::before{
+  opacity: 1;
+  transform: scale(1.02);
+  animation: glowPulse 1.8s ease-in-out infinite;
+}
+
+/* animate sparkle across the icon */
+.upload-icon:hover::after{
+  opacity: 1;
+  animation: sparkleMove 1.6s cubic-bezier(.2,.8,.2,1) infinite;
+}
+
+/* subtle pulse for halo */
+@keyframes glowPulse {
+  0%   { transform: scale(1);    opacity: 0.85; }
+  50%  { transform: scale(1.035); opacity: 1;    }
+  100% { transform: scale(1);    opacity: 0.85; }
+}
+
+/* sparkle travel path: starts off-left, pops, crosses the image and fades out right */
+@keyframes sparkleMove {
+  0% {
+    left: -10%;
+    top: 60%;
+    transform: translate(-50%,-50%) scale(0);
+    opacity: 0;
+    filter: blur(0px);
+  }
+  20% {
+    transform: translate(-50%,-50%) scale(0.9);
+    opacity: 1;
+  }
+  55% {
+    left: 50%;
+    top: 18%;
+    transform: translate(-50%,-50%) scale(1);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  85% {
+    left: 115%;
+    top: 40%;
+    transform: translate(-50%,-50%) scale(0.6);
+    opacity: 0.6;
+    filter: blur(1px);
+  }
+  100% {
+    left: 140%;
+    top: 55%;
+    transform: translate(-50%,-50%) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .upload-icon::before,
+  .upload-icon::after,
+  .upload-icon img {
+    animation: none !important;
+    transition: none !important;
+  }
+  .upload-icon:hover img { transform: none; filter: none; }
+  .upload-icon:hover::before { opacity: 0.9; transform: none; }
+  .upload-icon:hover::after { opacity: 0; }
+}
+
 
 .upload-text {
     font-size: 1.1rem;
